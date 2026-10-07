@@ -3,42 +3,61 @@ const fs = require('fs');
 const path = require('path');
 const httpProxy = require('http-proxy');
 
-// Create a proxy instance to scramble the traffic data
+// Advanced proxy core configured to actively rewrite security parameters
 const proxy = httpProxy.createProxyServer({
     changeOrigin: true,
     autoRewrite: true,
+    followRedirects: true,
     ssl: { rejectUnauthorized: false }
+});
+
+// Intercept the target site's response to strip out frame blocks live
+proxy.on('proxyRes', function (proxyRes, req, res) {
+    // Delete the security blocks that stop Roblox from opening in an iframe
+    delete proxyRes.headers['x-frame-options'];
+    delete proxyRes.headers['content-security-policy'];
+    
+    // Enable cross-origin permissions dynamically
+    proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+    proxyRes.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS';
 });
 
 const PORT = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
-    // 1. Serve your custom HTML interface on the main page
+    // 1. Deliver your polished green/navy dashboard
     if (req.url === '/' || req.url === '/index.html') {
         fs.readFile(path.join(__dirname, 'index.html'), (err, content) => {
             if (err) {
                 res.writeHead(500);
-                res.end('Error loading index.html');
+                res.end('Dashboard core asset delivery failure.');
             } else {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.end(content);
             }
         });
     } 
-    // 2. Intercept and route game traffic through the proxy engine
+    // 2. Intercept and completely scrub the target site request
     else if (req.url.startsWith('/proxy')) {
         const urlParams = new URL(req.url, `http://${req.headers.host}`);
-        const targetUrl = urlParams.searchParams.get('url');
+        let targetUrl = urlParams.searchParams.get('url');
 
         if (targetUrl) {
-            console.log(`[Proxy Engine] Encrypting traffic for: ${targetUrl}`);
+            // Enforce clean formatting protocols
+            if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+                targetUrl = 'https://' + targetUrl;
+            }
+
+            console.log(`[Tunnel Active] Overriding headers for: ${targetUrl}`);
+            
+            // Execute the connection redirect
             proxy.web(req, res, { target: targetUrl }, (error) => {
                 res.writeHead(500);
-                res.end('Proxy routing handshake failed.');
+                res.end('Proxy handshake timed out or dropped by target.');
             });
         } else {
             res.writeHead(400);
-            res.end('Missing target parameter.');
+            res.end('Missing target parameter link.');
         }
     } else {
         res.writeHead(404);
@@ -47,5 +66,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-    console.log(`Proxy dashboard running live on port ${PORT}`);
+    console.log(`Quantum Node Gateway online on port ${PORT}`);
 });
