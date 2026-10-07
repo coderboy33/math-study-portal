@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>123456</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAEUlEQVR42mNkQAOAMBoFw0wAAAhcAAGb997gAAAAAElFTkSuQmCC">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0b0f19 0%, #05070b 100%);
+            color: #ffffff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portal-card {
+            background: rgba(16, 24, 40, 0.75);
+            border: 1px solid rgba(0, 255, 102, 0.15);
+            padding: 50px 40px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 255, 102, 0.05);
+            max-width: 550px;
+            width: 90%;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .portal-card:hover {
+            border-color: rgba(0, 255, 102, 0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 255, 102, 0.1);
+        }
+
+        .terminal-header {
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: #00ff66;
+            background: rgba(0, 255, 102, 0.1);
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(180deg, #ffffff 0%, #a3b3cc 100%);
+            -webkit-background-clip: text;
+            background-clip: text; /* Fixed Line */
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: #718096;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        .gateway-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(5, 7, 11, 0.8);
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        input[type="text"]:focus {
+            border-color: #00ff66;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background-color: #00ff66;
+            color: #05070b;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3);
+        }
+
+        button:hover {
+            background-color: #00cc52;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 102, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .panic-hint {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #4a5568;
+            font-family: monospace;
+        }
+
+        #gameFrame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            display: none;
+            z-index: 99999;
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portal-card" id="uiWrapper">
+        <div class="terminal-header">// STATUS: SECURE_TUNNEL_READY</div>
+        <h1>Quantum Node</h1>
+        <p>Establish a client-side frame buffer to direct web infrastructure assets safely to this terminal environment.</p>
+        
+        <div class="gateway-form">
+            <input type="text" id="targetUrl" value="https://now.gg" placeholder="Input core server url...">
+            <button onclick="startBypasser()">EXECUTE SECURE CLIENT</button>
+        </div>
+        
+        <div class="panic-hint">EMERGENCY ESCAPE: PRESS [ESC] KEY KEYBOARD SHORTCUT</div>
+    </div>
+
+    <iframe id="gameFrame" src=""></iframe>
+
+    <script>
+        document.title = "123456";
+
+        function startBypasser() {
+            var url = document.getElementById("targetUrl").value;
+            var frame = document.getElementById("gameFrame");
+            var ui = document.getElementById("uiWrapper");
+
+            if (url) {
+                frame.src = url;
+                frame.style.display = "block";
+                ui.style.display = "none";
+            }
+        }
+
+        window.addEventListener("keydown", function(e) {
+            if (e.key === "Escape") {
+                document.title = "Google Docs";
+                var frame = document.getElementById("gameFrame");
+                if (frame) {
+                    frame.style.display = "none";
+                    frame.src = "about:blank"; 
+                }
+                location.reload(); 
+            }
+        });
+    </script>
+</body>
+</html>
