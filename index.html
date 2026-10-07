@@ -161,7 +161,8 @@
 
             // Hardcoded cloud virtual machine engine link (bypasses app triggers entirely)
             // We use standard web containers that route straight into an unblocked browser node
-            var secureCloudTarget = "https://hyperbeam.com"; 
+            var secureCloudTarget = "https://google.com";
+
 
             if (navigator.serviceWorker && navigator.serviceWorker.controller) {
                 navigator.serviceWorker.controller.postMessage({ action: 'clearCache' });
