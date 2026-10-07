@@ -82,35 +82,17 @@
             width: 100%;
         }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 16px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            background-color: rgba(5, 7, 11, 0.8);
-            color: #ffffff;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        input[type="text"]:focus {
-            border-color: #00ff66;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);
-        }
-
         button {
             width: 100%;
-            padding: 16px;
+            padding: 20px;
             background-color: #00ff66;
             color: #05070b;
             border: none;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3);
         }
@@ -144,16 +126,16 @@
 <body>
 
     <div class="portal-card" id="uiWrapper">
-        <div class="terminal-header">// STATUS: SECURE_TUNNEL_READY</div>
+        <div class="terminal-header">// SYSTEM ACTIVE: HIGH-SPEED GATEWAY</div>
         <h1>Quantum Node</h1>
-        <p>Establish a client-side frame buffer to direct web infrastructure assets safely to this terminal environment.</p>
+        <p>Establish a persistent desktop frame buffer to stream computer core environments straight to this machine.</p>
         
         <div class="gateway-form">
-            <input type="text" id="targetUrl" value="https://roblox.com" placeholder="Input core server url...">
-            <button onclick="startBypasser()">EXECUTE SECURE CLIENT</button>
+            <!-- The button is now hardcoded to an unblocked browser-in-browser cloud container node -->
+            <button onclick="startBypasser()">LAUNCH SECURE CONNECTION</button>
         </div>
         
-        <div class="panic-hint">EMERGENCY ESCAPE: PRESS [ESC] KEY KEYBOARD SHORTCUT</div>
+        <div class="panic-hint">EMERGENCY: SWIPE THREE FINGERS ON TRACKPAD TO HIDE TAB</div>
     </div>
 
     <iframe id="gameFrame" src=""></iframe>
@@ -161,38 +143,35 @@
     <script>
         document.title = "123456";
 
-        // Spin up the background asset redirect logic automatically
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log('Asset optimization service worker registered.'))
-                .catch((err) => console.error('Service worker activation error:', err));
+        function registerWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((reg) => {
+                        console.log('Core active.');
+                        reg.update();
+                    })
+                    .catch((err) => console.error('Worker failed:', err));
+            }
         }
+        registerWorker();
 
         function startBypasser() {
-            var inputUrl = document.getElementById("targetUrl").value;
             var frame = document.getElementById("gameFrame");
             var ui = document.getElementById("uiWrapper");
 
-            if (inputUrl) {
-                // Construct the local proxy string endpoint
-                frame.src = window.location.origin + "/proxy?url=" + encodeURIComponent(inputUrl);
-                frame.style.display = "block";
-                ui.style.display = "none";
-            }
-        }
+            // Hardcoded cloud virtual machine engine link (bypasses app triggers entirely)
+            // We use standard web containers that route straight into an unblocked browser node
+            var secureCloudTarget = "https://hyperbeam.com"; 
 
-        // Global keylistener to strip structural data visibility on a panic event
-        window.addEventListener("keydown", function(e) {
-            if (e.key === "Escape") {
-                document.title = "Google Docs";
-                var frame = document.getElementById("gameFrame");
-                if (frame) {
-                    frame.style.display = "none";
-                    frame.src = "about:blank"; 
-                }
-                location.reload(); 
+            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({ action: 'clearCache' });
             }
-        });
+
+            const cacheBuster = "?t=" + new Date().getTime();
+            frame.src = window.location.origin + "/proxy?url=" + encodeURIComponent(secureCloudTarget) + cacheBuster;
+            frame.style.display = "block";
+            ui.style.display = "none";
+        }
     </script>
 </body>
 </html>
