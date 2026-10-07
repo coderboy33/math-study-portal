@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const httpProxy = require('http-proxy');
 
-// Advanced proxy core configured to actively rewrite security parameters
+// Advanced proxy instance to seamlessly handle redirection and asset headers
 const proxy = httpProxy.createProxyServer({
     changeOrigin: true,
     autoRewrite: true,
@@ -11,60 +11,72 @@ const proxy = httpProxy.createProxyServer({
     ssl: { rejectUnauthorized: false }
 });
 
-// Intercept the target site's response to strip out frame blocks live
+// Intercept target site responses to strip anti-framing and security protocols live
 proxy.on('proxyRes', function (proxyRes, req, res) {
-    // Delete the security blocks that stop Roblox from opening in an iframe
+    // Erase security headers preventing embedded framework loading
     delete proxyRes.headers['x-frame-options'];
     delete proxyRes.headers['content-security-policy'];
     
-    // Enable cross-origin permissions dynamically
+    // Inject flexible cross-origin sharing access parameters
     proxyRes.headers['Access-Control-Allow-Origin'] = '*';
-    proxyRes.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS';
+    proxyRes.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE';
+    proxyRes.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, Content-Type, Authorization';
 });
 
 const PORT = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
-    // 1. Deliver your polished green/navy dashboard
+    // Enable core routing options for local assets
     if (req.url === '/' || req.url === '/index.html') {
         fs.readFile(path.join(__dirname, 'index.html'), (err, content) => {
             if (err) {
                 res.writeHead(500);
-                res.end('Dashboard core asset delivery failure.');
+                res.end('Error loading dashboard assets.');
             } else {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.end(content);
             }
         });
     } 
-    // 2. Intercept and completely scrub the target site request
+    // Deliver the service worker asset-interceptor layer
+    else if (req.url === '/sw.js') {
+        fs.readFile(path.join(__dirname, 'sw.js'), (err, content) => {
+            if (err) {
+                res.writeHead(500);
+                res.end('Error loading service worker schema.');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'application/javascript' });
+                res.end(content);
+            }
+        });
+    }
+    // Parse proxy query strings and scrub the outbound request configurations
     else if (req.url.startsWith('/proxy')) {
         const urlParams = new URL(req.url, `http://${req.headers.host}`);
         let targetUrl = urlParams.searchParams.get('url');
 
         if (targetUrl) {
-            // Enforce clean formatting protocols
+            // Guarantee unified URL schema formatting 
             if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
                 targetUrl = 'https://' + targetUrl;
             }
 
-            console.log(`[Tunnel Active] Overriding headers for: ${targetUrl}`);
+            console.log(`[Tunnel Relay] Fetching target layout data for: ${targetUrl}`);
             
-            // Execute the connection redirect
             proxy.web(req, res, { target: targetUrl }, (error) => {
                 res.writeHead(500);
-                res.end('Proxy handshake timed out or dropped by target.');
+                res.end('Handshake timed out or rejected by destination host.');
             });
         } else {
             res.writeHead(400);
-            res.end('Missing target parameter link.');
+            res.end('Missing core gateway destination parameter.');
         }
     } else {
         res.writeHead(404);
-        res.end('Not Found');
+        res.end('Route Not Found');
     }
 });
 
 server.listen(PORT, () => {
-    console.log(`Quantum Node Gateway online on port ${PORT}`);
+    console.log(`Bypasser portal running smoothly on port ${PORT}`);
 });

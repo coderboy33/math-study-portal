@@ -64,7 +64,7 @@
             margin-bottom: 12px;
             background: linear-gradient(180deg, #ffffff 0%, #a3b3cc 100%);
             -webkit-background-clip: text;
-            background-clip: text; /* Fixed Line */
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -121,10 +121,6 @@
             box-shadow: 0 6px 20px rgba(0, 255, 102, 0.4);
         }
 
-        button:active {
-            transform: translateY(0);
-        }
-
         .panic-hint {
             margin-top: 25px;
             font-size: 12px;
@@ -153,7 +149,7 @@
         <p>Establish a client-side frame buffer to direct web infrastructure assets safely to this terminal environment.</p>
         
         <div class="gateway-form">
-            <input type="text" id="targetUrl" value="https://now.gg" placeholder="Input core server url...">
+            <input type="text" id="targetUrl" value="https://roblox.com" placeholder="Input core server url...">
             <button onclick="startBypasser()">EXECUTE SECURE CLIENT</button>
         </div>
         
@@ -165,28 +161,38 @@
     <script>
         document.title = "123456";
 
-function startBypasser() {
-    var inputUrl = document.getElementById("targetUrl").value;
-    var frame = document.getElementById("gameFrame");
-    var ui = document.getElementById("uiWrapper");
-
-    if (inputUrl) {
-        // Direct the web link straight through your cloud proxy rewrite route
-        frame.src = window.location.origin + "/proxy?url=" + encodeURIComponent(inputUrl);
-        frame.style.display = "block";
-        ui.style.display = "none";
-    }
-}
-
-// Emergency Escape Hatch
-window.addEventListener("keydown", function(e) {
-    if (e.key === "Escape") {
-        document.title = "Google Docs";
-        var frame = document.getElementById("gameFrame");
-        if (frame) {
-            frame.style.display = "none";
-            frame.src = "about:blank"; 
+        // Spin up the background asset redirect logic automatically
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('Asset optimization service worker registered.'))
+                .catch((err) => console.error('Service worker activation error:', err));
         }
-        location.reload(); 
-    }
-});
+
+        function startBypasser() {
+            var inputUrl = document.getElementById("targetUrl").value;
+            var frame = document.getElementById("gameFrame");
+            var ui = document.getElementById("uiWrapper");
+
+            if (inputUrl) {
+                // Construct the local proxy string endpoint
+                frame.src = window.location.origin + "/proxy?url=" + encodeURIComponent(inputUrl);
+                frame.style.display = "block";
+                ui.style.display = "none";
+            }
+        }
+
+        // Global keylistener to strip structural data visibility on a panic event
+        window.addEventListener("keydown", function(e) {
+            if (e.key === "Escape") {
+                document.title = "Google Docs";
+                var frame = document.getElementById("gameFrame");
+                if (frame) {
+                    frame.style.display = "none";
+                    frame.src = "about:blank"; 
+                }
+                location.reload(); 
+            }
+        });
+    </script>
+</body>
+</html>
